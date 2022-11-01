@@ -9,10 +9,21 @@ import App from "./App";
 import AlbumDetails from "./pages/AlbumDetails";
 import EditAlbum from "./pages/EditAlbum";
 import NewAlbum from "./pages/NewAlbum";
+import { ThemeProvider } from "styled-components";
+import { theme } from "./theme/theme";
+import { GlobalStyle } from "./theme/globalStyle";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<App />}>
+    <Route
+      path="/"
+      element={
+        <ThemeProvider theme={theme}>
+          <GlobalStyle />
+          <App />
+        </ThemeProvider>
+      }
+    >
       <Route path="create" element={<NewAlbum />} />
       <Route path="edit/:id" element={<EditAlbum />} />
       <Route path="details/:id" element={<AlbumDetails />} />
