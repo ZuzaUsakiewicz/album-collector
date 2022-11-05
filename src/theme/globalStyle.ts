@@ -1,6 +1,7 @@
 import { createGlobalStyle } from "styled-components";
+import { MyTheme } from "./theme";
 
-export const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle<MyTheme>`
 /* Box sizing rules */
 *,
 *::before,
@@ -38,11 +39,20 @@ body {
   min-height: 100vh;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 16px;
+  background-color: ${({ theme }) => theme.colors.backgroundColor};
+  color: ${({ theme }) => theme.colors.textColor};
 }
 
 /* A elements that don't have a class get default styles */
 a:not([class]) {
   text-decoration-skip-ink: auto;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 /* Make images easier to work with */
@@ -58,6 +68,9 @@ button,
 textarea,
 select {
   font: inherit;
+}
+button {
+  cursor: pointer;
 }
 
 /* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
