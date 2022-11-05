@@ -1,6 +1,8 @@
 import { supabase } from "../config/supabaseClient";
 import { useState, useEffect } from "react";
 import { AlbumCard } from "../components/AlbumCard";
+import { FlexRowCenter } from "../theme/styleHelpers";
+import styled from "styled-components";
 
 export interface Album {
   id: number;
@@ -11,9 +13,22 @@ export interface Album {
   rating: number;
 }
 
+const AlbumsContainer = styled.section`
+  ${FlexRowCenter};
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding: 3rem;
+`;
+
 const Home = () => {
   const [fetchError, setFetchError] = useState<string | null>(null);
   const [albums, setAlbums] = useState<Array<Album> | null>(null);
+
+  const handleDelete = (id: number) => {
+    setAlbums((prevAlbums: any) => {
+      return prevAlbums?.filter((album: any) => album.id !== id);
+    });
+  };
 
   useEffect(() => {
     const fetchAlbums = async () => {
@@ -35,11 +50,11 @@ const Home = () => {
     <div>
       {fetchError ? <p>{fetchError}</p> : null}
       {albums ? (
-        <div>
+        <AlbumsContainer>
           {albums.map((album) => (
-            <AlbumCard album={album} key={album.id} />
+            <AlbumCard album={album} key={album.id} onDelete={handleDelete} />
           ))}
-        </div>
+        </AlbumsContainer>
       ) : (
         "loading"
       )}
