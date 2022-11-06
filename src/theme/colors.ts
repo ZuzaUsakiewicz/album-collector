@@ -3,4 +3,5 @@ export const colors = {
   textColor: "#ededed",
   cardColor: "#262424",
   accentColor: "#00a1ff",
+  cardHoverColor: "#304343",
 };

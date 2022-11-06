@@ -25,11 +25,12 @@ const AlbumCardContainer = styled.div`
   width: 20rem;
   height: 10rem;
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  text-transform: capitalize;
   ${BoxShadow};
   cursor: pointer;
   @media ${mediaQueries.laptop} {
     &:hover {
-      background: #304343;
+      background: ${({ theme }) => theme.colors.cardHoverColor};
       transform: translateY(-0.3rem);
       ${BoxShadowHover};
     }
@@ -72,34 +73,36 @@ export const AlbumCard: React.FC<Props> = ({ album, onDelete }) => {
   };
 
   return (
-    <AlbumCardContainer>
-      <AlbumTitle>{album.album_title}</AlbumTitle>
-      <AlbumArtist>
-        <span>by </span> {album.album_artist}
-      </AlbumArtist>
-      <IconsContainer>
-        <Link to={`/edit/${album.id}`}>
+    <Link to={`/details/${album.id}`}>
+      <AlbumCardContainer>
+        <AlbumTitle>{album.album_title}</AlbumTitle>
+        <AlbumArtist>
+          <span>by </span> {album.album_artist}
+        </AlbumArtist>
+        <IconsContainer>
+          <Link to={`/edit/${album.id}`}>
+            <span
+              className="material-symbols-outlined"
+              aria-label="edit album"
+              role="img"
+            >
+              edit
+            </span>
+          </Link>
           <span
             className="material-symbols-outlined"
-            aria-label="edit album"
+            aria-label="delete album"
             role="img"
+            onClick={handleDelete}
           >
-            edit
+            delete
           </span>
-        </Link>
-        <span
-          className="material-symbols-outlined"
-          aria-label="delete album"
-          role="img"
-          onClick={handleDelete}
-        >
-          delete
-        </span>
-      </IconsContainer>
-      <Rating>
-        <span className="material-symbols-outlined">workspace_premium</span>
-        {album.rating}
-      </Rating>
-    </AlbumCardContainer>
+        </IconsContainer>
+        <Rating>
+          <span className="material-symbols-outlined">workspace_premium</span>
+          {album.rating}
+        </Rating>
+      </AlbumCardContainer>
+    </Link>
   );
 };

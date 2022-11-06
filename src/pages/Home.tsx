@@ -1,8 +1,9 @@
 import { supabase } from "../config/supabaseClient";
 import { useState, useEffect } from "react";
 import { AlbumCard } from "../components/AlbumCard";
-import { FlexRowCenter } from "../theme/styleHelpers";
+import { BoxShadow, FlexRowCenter, FlexRowStart } from "../theme/styleHelpers";
 import styled from "styled-components";
+import { Container } from "../theme/styleComponents";
 
 export interface Album {
   id: number;
@@ -13,16 +14,38 @@ export interface Album {
   rating: number;
 }
 
+type Order = {
+  typeOfOrder: string;
+  ascendIs: boolean;
+};
+
 const AlbumsContainer = styled.section`
-  ${FlexRowCenter};
+  ${FlexRowStart};
   gap: 2rem;
   flex-wrap: wrap;
   padding: 3rem;
 `;
 
-const Home = () => {
+const OrderBy = styled.div`
+  ${FlexRowCenter};
+  gap: 0.5rem;
+  button {
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.5rem;
+    border: none;
+    color: ${({ theme }) => theme.colors.textColor};
+    background: ${({ theme }) => theme.colors.cardHoverColor};
+    ${BoxShadow};
+  }
+`;
+
+const Home: React.FC = () => {
   const [fetchError, setFetchError] = useState<string | null>(null);
   const [albums, setAlbums] = useState<Array<Album> | null>(null);
+  const [orderBy, setOrderBy] = useState<Order>({
+    typeOfOrder: "created_at",
+    ascendIs: false,
+  });
 
   const handleDelete = (id: number) => {
     setAlbums((prevAlbums: any) => {
@@ -32,7 +55,10 @@ const Home = () => {
 
   useEffect(() => {
     const fetchAlbums = async () => {
-      const { data, error } = await supabase.from("albums").select();
+      const { data, error } = await supabase
+        .from("albums")
+        .select()
+        .order(orderBy.typeOfOrder, { ascending: orderBy.ascendIs });
 
       if (error) {
         setFetchError("Could not fetch data");
@@ -44,11 +70,40 @@ const Home = () => {
       }
     };
     fetchAlbums();
-  }, []);
+  }, [orderBy]);
 
   return (
-    <div>
+    <Container>
       {fetchError ? <p>{fetchError}</p> : null}
+      <OrderBy>
+        <p>Order albums by:</p>
+        <button
+          onClick={() =>
+            setOrderBy({ typeOfOrder: "created_at", ascendIs: false })
+          }
+        >
+          Time Created
+        </button>
+        <button
+          onClick={() =>
+            setOrderBy({ typeOfOrder: "album_title", ascendIs: true })
+          }
+        >
+          Album Title
+        </button>
+        <button
+          onClick={() =>
+            setOrderBy({ typeOfOrder: "album_artist", ascendIs: true })
+          }
+        >
+          Album Artist
+        </button>
+        <button
+          onClick={() => setOrderBy({ typeOfOrder: "rating", ascendIs: false })}
+        >
+          Rating
+        </button>
+      </OrderBy>
       {albums ? (
         <AlbumsContainer>
           {albums.map((album) => (
@@ -58,7 +113,7 @@ const Home = () => {
       ) : (
         "loading"
       )}
-    </div>
+    </Container>
   );
 };
 
