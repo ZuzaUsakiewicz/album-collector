@@ -20,7 +20,7 @@ const AlbumsContainer = styled.section`
   padding: 3rem;
 `;
 
-const Home = () => {
+const Home: React.FC = () => {
   const [fetchError, setFetchError] = useState<string | null>(null);
   const [albums, setAlbums] = useState<Array<Album> | null>(null);
 

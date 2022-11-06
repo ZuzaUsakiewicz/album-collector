@@ -1,6 +1,6 @@
 import React from "react";
 
-const AlbumDetails = () => {
+const AlbumDetails: React.FC = () => {
   return <div>AlbumDetails</div>;
 };
 

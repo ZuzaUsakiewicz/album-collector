@@ -3,7 +3,7 @@ import { supabase } from "../config/supabaseClient";
 import { useNavigate } from "react-router-dom";
 import { Container, Form } from "../theme/styleComponents";
 
-const NewAlbum = () => {
+const NewAlbum: React.FC = () => {
   const navigate = useNavigate();
 
   const [album_title, setAlbumTitle] = useState<string>("");

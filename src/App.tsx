@@ -19,7 +19,7 @@ const CreateAlbum = styled(Link)`
     0px 3px 1px -2px hsla(0, 0%, 0%, 0.12), 0px 1px 5px 0px hsla(0, 0%, 0%, 0.2);
 `;
 
-function App() {
+const App: React.FC = () => {
   return (
     <>
       <Navbar>
@@ -29,6 +29,6 @@ function App() {
       <Outlet />
     </>
   );
-}
+};
 
 export default App;

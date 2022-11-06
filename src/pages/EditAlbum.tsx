@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { supabase } from "../config/supabaseClient";
 import { Container, Form } from "../theme/styleComponents";
 
-const EditAlbum = () => {
+const EditAlbum: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [album_title, setAlbumTitle] = useState<string>("");
