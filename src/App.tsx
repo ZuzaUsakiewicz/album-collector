@@ -9,7 +9,21 @@ const Navbar = styled.nav`
   padding: 1rem 3rem;
   max-width: 1400px;
   font-size: ${({ theme }) => theme.typography.size.mdFont};
+
+  button {
+    background: none;
+    border: none;
+    span {
+      color: ${({ theme }) => theme.colors.textColor};
+      font-size: ${({ theme }) => theme.typography.size.xxlFont};
+    }
+  }
 `;
+
+const HomeIcon = styled.span`
+  font-size: ${({ theme }) => theme.typography.size.xxlFont};
+`;
+
 const CreateAlbum = styled(Link)`
   background: ${({ theme }) => theme.colors.accentColor};
   padding: 0.5rem 1rem;
@@ -23,7 +37,14 @@ const App: React.FC = () => {
   return (
     <>
       <Navbar>
-        <Link to="/">home</Link>
+        <div>
+          <Link to="/" aria-label="go to homepage">
+            <HomeIcon className="material-symbols-outlined">home</HomeIcon>
+          </Link>
+          <button aria-label="settings">
+            <span className="material-symbols-outlined">settings</span>
+          </button>
+        </div>
         <CreateAlbum to="create">new album</CreateAlbum>
       </Navbar>
       <Outlet />
